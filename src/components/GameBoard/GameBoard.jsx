@@ -1,21 +1,22 @@
+
 import React from 'react';
 import GuessRow from '../GuessRow/GuessRow';
-import ColorPicker from '../ColorPicker/ColorPicker';
-import NewGameButton from '../NewGameButton/NewGameButton';
-import ScoreButton from '../ScoreButton/ScoreButton';
-
+import './GameBoard.css';
 
 const GameBoard = (props) => {
-    return (
-        <div>
-            <GuessRow />
-            <GuessRow />
-            <ColorPicker />
-            <NewGameButton />
-            <ScoreButton />
-        </div>
-    );
+  return (
+    <div className="GameBoard">
+      {props.guesses.map((guess, idx) => 
+        <GuessRow
+          guess={guess}
+          colors={props.colors}
+          rowIdx={idx}
+          currentGuess={idx === (props.guesses.length - 1)}
+          key={idx}
+        />
+      )}
+    </div>
+  );
 }
 
 export default GameBoard;
-

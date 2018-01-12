@@ -1,12 +1,11 @@
 import React from 'react';
 
 const NewGameButton = (props) => {
-    return(
-        <div>
-            This is the New Game Button
-        </div>
-    )
+  return (
+    <button  className="btn btn-default" style={{margin: 10}}>
+      New Game
+    </button>
+  );
 }
 
-
-export default NewGameButton
+export default NewGameButton;
