@@ -7,7 +7,9 @@ const GuessPeg = (props) => {
     margin: 5,
     borderRadius: '50%',
     backgroundColor: props.color,
-    opacity: 0.85
+    opacity: 0.85,
+    border: props.color || '1px dashed grey',
+    cursor: props.currentGuess && 'pointer'
   };
 
   return (
