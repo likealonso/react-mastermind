@@ -24,6 +24,12 @@ class App extends Component {
       selColorIdx: 0,
       guesses: [this.getNewGuess()]
     };
+
+    // this.handleColorSelection= this.handleColorSelection.bind(this)
+  }
+
+  handleColorSelection = (colorIdx) =>  {
+    this.setState({selColorIdx: colorIdx})
   }
 
   getNewGuess() {
@@ -59,6 +65,7 @@ class App extends Component {
           />
           <div className="App-controls">
             <ColorPicker
+              handleColorSelection={this.handleColorSelection}
               selColorIdx={this.state.selColorIdx}
               colors={this.state.colors}
             />
