@@ -14,22 +14,22 @@ let headFootStyle = {
   textAlign: 'center'
 };
 
+let colors = ['#155765', '#57652A', '#AB9353', '#4D2C3D'];
+
 class App extends Component {
   constructor(props) {
     super(props);
-    let colors = ['#155765', '#57652A', '#AB9353', '#4D2C3D'];
-    this.state = {
+      this.state = this.getInitialState()
+  }
+
+  getInitialState = () => {
+    return {
       colors,
       code: this.genCode(colors.length),
       selColorIdx: 0,
       guesses: [this.getNewGuess()]
-    };
-
-    // this.handleColorSelection= this.handleColorSelection.bind(this)
-  }
-
-  handleColorSelection = (colorIdx) =>  {
-    this.setState({selColorIdx: colorIdx})
+      // this.handleColorSelection= this.handleColorSelection.bind(this)
+    }
   }
 
   getNewGuess() {
@@ -51,6 +51,12 @@ class App extends Component {
     // if winner, return num guesses, otherwise 0 (no winner)
     let lastGuess = this.state.guesses.length - 1;
     return this.state.code.join() === this.state.guesses[lastGuess].code.join() ? lastGuess + 1 : 0;
+  }
+
+  /*---------- Callback Methods ----------*/
+
+  handleColorSelection = (colorIdx) =>  {
+    this.setState({selColorIdx: colorIdx})
   }
 
   render() {
