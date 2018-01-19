@@ -59,6 +59,29 @@ class App extends Component {
     this.setState({selColorIdx: colorIdx})
   }
 
+  handleNewGameClick = () => {
+    this.setState(this.getInitialState())
+  }
+
+  handlePegClick = (pegIdx) => {
+    let currentGuessIdx = this.state.guesses.length - 1;
+
+  // Replacing objects/arrays with NEW versions
+    let guessesCopy = [...this.state.guesses];
+    let codeArrCopy = [...guessesCopy[currentGuessIdx].code];
+
+  // Update new array
+    codeArrCopy[pegIdx] = this.state.selColorIdx;
+
+  // Update new guesses array
+    guessesCopy[currentGuessIdx].code = codeArrCopy;
+
+  // Update state with new guesses array
+    this.setState({
+      guesses: guessesCopy
+    });
+  }
+
   render() {
     let winTries = this.getWinTries();
     return (
