@@ -56,6 +56,7 @@ class App extends Component {
   /*---------- Callback Methods ----------*/
 
   handleColorSelection = (colorIdx) =>  {
+    console.log(this.state.guesses.length)
     this.setState({selColorIdx: colorIdx})
   }
 
@@ -82,6 +83,52 @@ class App extends Component {
     });
   }
 
+  handleScoreClick = () => {
+    let currentGuessIdx = this.state.guesses.length - 1;
+  
+  // Computing the score will modify the guessed code and the
+  // secret code, therefore create copies of the originals
+    let guessCodeCopy = [...this.state.guesses[currentGuessIdx].code]
+    let secretCodeCopy = [...this.state.code]
+
+    let perfect = 0, almost = 0;
+
+  // First pass computes number of "perfect"
+    guessCodeCopy.forEach((code, idx) => {
+      if (secretCodeCopy[idx] === code) {
+        perfect++;
+        //ensure it doesn't match again
+        guessCodeCopy[idx] = secretCodeCopy[idx] = null
+      }
+    });
+
+    // Second pass computer number of "almost"
+    guessCodeCopy.forEach((code, idx) => {
+      if (code === null) return;
+      let foundIdx = secretCodeCopy.indexOf(code);
+      if (foundIdx > -1) {
+        almost++;
+        secretCodeCopy[foundIdx] = null;
+      }
+    });
+
+    // State must only be update with new objects/arrays
+    let guessesCopy = [...this.state.guesses];
+
+    // Set scores
+    guessesCopy[currentGuessIdx].score.perfect = perfect;
+    guessesCopy[currentGuessIdx].score.almost = almost;
+
+    // Add new guess if not a winner
+    if (perfect !== 4) guessesCopy.push(this.getNewGuess())
+
+    // Finally, update state with new guesses array
+    this.setState({
+      guesses: guessesCopy
+    });
+
+  }
+
   render() {
     let winTries = this.getWinTries();
     return (
@@ -91,6 +138,8 @@ class App extends Component {
           <GameBoard
             guesses={this.state.guesses}
             colors={this.state.colors}
+            handlePegClick={this.handlePegClick}
+            handleScoreClick={this.handleScoreClick}
           />
           <div className="App-controls">
             <ColorPicker
@@ -98,7 +147,7 @@ class App extends Component {
               selColorIdx={this.state.selColorIdx}
               colors={this.state.colors}
             />
-            <NewGameButton />
+            <NewGameButton handleNewGameClick={this.handleNewGameClick} />
           </div>
         </div>
         <footer style={headFootStyle}>{(winTries ? `You Won in ${winTries} Guesses!` : 'Good Luck!')}</footer>
