@@ -13,7 +13,10 @@ const GuessPeg = (props) => {
   };
 
   return (
-    <div style={style} />
+    <div 
+      style={style} 
+      onClick={props.currentGuess ? props.handlePegClick : null}
+    />
   );
 }
 
