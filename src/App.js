@@ -56,7 +56,8 @@ class App extends Component {
   /*---------- Callback Methods ----------*/
 
   handleColorSelection = (colorIdx) =>  {
-    console.log(this.state.guesses.length)
+    console.log('HEY!!!' + this.state.guesses.length)
+    console.log('ok!!!' + this.state.code)
     this.setState({selColorIdx: colorIdx})
   }
 
