@@ -4,6 +4,7 @@ import './App.css';
 import GameBoard from './components/GameBoard/GameBoard';
 import ColorPicker from './components/ColorPicker/ColorPicker';
 import NewGameButton from './components/NewGameButton/NewGameButton';
+// import GameTimer from './components/GameTimer/GameTimer'
 
 let headFootStyle = {
   height: 50,
@@ -14,7 +15,7 @@ let headFootStyle = {
   textAlign: 'center'
 };
 
-let colors = ['#155765', '#57652A', '#AB9353', '#4D2C3D'];
+let colors = ['blue', 'green', 'red', 'orange'];
 
 class App extends Component {
   constructor(props) {
@@ -56,8 +57,15 @@ class App extends Component {
   /*---------- Callback Methods ----------*/
 
   handleColorSelection = (colorIdx) =>  {
-    console.log('HEY!!!' + this.state.guesses.length)
-    console.log('ok!!!' + this.state.code)
+    let lastGuess = this.state.guesses.length - 1;
+    console.log('lastGuess ' + lastGuess)
+    console.log(this.state.guesses)
+    console.log('this.state.guesses[lastGuess] ' + this.state.guesses[lastGuess])
+    console.log(this.state.guesses[lastGuess].code)
+    console.log(this.state.code)
+    console.log('this.state.code.join() ' + this.state.code.join())
+    console.log('this.state.colors ' + this.state.colors)
+    console.log('this.state.selColorIdx ' + this.state.selColorIdx)
     this.setState({selColorIdx: colorIdx})
   }
 
@@ -148,6 +156,7 @@ class App extends Component {
               selColorIdx={this.state.selColorIdx}
               colors={this.state.colors}
             />
+            {/* <GameTimer /> */}
             <NewGameButton handleNewGameClick={this.handleNewGameClick} />
           </div>
         </div>
