@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import GameBoard from '../../components/GameBoard/GameBoard';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
 import NewGameButton from '../../components/NewGameButton/NewGameButton';
-import GameTimer from '../../components/GameTimer/GameTimer'
+import GameTimer from '../../components/GameTimer/GameTimer';
+import './GamePage.css'
 
 const GamePage = (props) => {
     let lastGuess = props.guesses.length - 1;
