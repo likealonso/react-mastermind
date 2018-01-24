@@ -183,14 +183,14 @@ class App extends Component {
                   interval={1000}
                 />}
               />
-              <Route exact path= '/settings' render={() =>
+              {/* <Route exact path= '/settings' render={() =>
                 <SettingsPage
                   colorTable={colorTable}
                   difficultyLevel={this.state.difficultyLevel}
                   handleDifficultyChange={this.setDifficulty}
                   handleNewGame={this.handleNewGameClick}
                 />}
-              />
+              /> */}
             </Switch>
           </BrowserRouter>
         </div>
