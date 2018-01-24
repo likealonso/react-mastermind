@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter,
+  Switch,
+  Route
+} from 'react-router-dom';
 import './App.css';
 // Must import components used in the JSX
-import GameBoard from './components/GameBoard/GameBoard';
-import ColorPicker from './components/ColorPicker/ColorPicker';
-import NewGameButton from './components/NewGameButton/NewGameButton';
-// import GameTimer from './components/GameTimer/GameTimer'
+import GamePage from '../GamePage/GamePage';
+// import SettingsPage from '../SettingsPage/SettingsPage'
+
 
 let headFootStyle = {
   height: 50,
@@ -23,12 +27,22 @@ class App extends Component {
       this.state = this.getInitialState()
   }
 
+  componentWillMount() {
+    console.log('App: componentWillMount')
+  }
+
+  componentDidMount() {
+    console.log('App: componentDidMount')
+  }
+
   getInitialState = () => {
     return {
       colors,
       code: this.genCode(colors.length),
       selColorIdx: 0,
-      guesses: [this.getNewGuess()]
+      guesses: [this.getNewGuess()],
+      elapsedTime: 0,
+      finalTime: 0
       // this.handleColorSelection= this.handleColorSelection.bind(this)
     }
   }
@@ -132,33 +146,53 @@ class App extends Component {
     if (perfect !== 4) guessesCopy.push(this.getNewGuess())
 
     // Finally, update state with new guesses array
-    this.setState({
-      guesses: guessesCopy
-    });
+    this.setState((prevState) => ({
+      guesses: guessesCopy,
+      finalTime: (perfect === 4) ? prevState.elapsedTime : 0 
+    }));
+    console.log('You win')
+  }
 
+  handleTick = () => {
+    this.setState((prevState) => ({
+      elapsedTime: ++prevState.elapsedTime
+    }))
   }
 
   render() {
+    console.log('render')
     let winTries = this.getWinTries();
     return (
       <div className="App">
         <header style={headFootStyle}>R E A C T &nbsp;&nbsp; M A S T E R M I N D</header>
         <div className="App-game">
-          <GameBoard
-            guesses={this.state.guesses}
-            colors={this.state.colors}
-            handlePegClick={this.handlePegClick}
-            handleScoreClick={this.handleScoreClick}
-          />
-          <div className="App-controls">
-            <ColorPicker
-              handleColorSelection={this.handleColorSelection}
-              selColorIdx={this.state.selColorIdx}
-              colors={this.state.colors}
-            />
-            {/* <GameTimer /> */}
-            <NewGameButton handleNewGameClick={this.handleNewGameClick} />
-          </div>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path= '/' render={() =>
+                <GamePage
+                  colors={this.state.colors}
+                  selColorIdx={this.state.selColorIdx}
+                  guesses={this.state.guesses}
+                  handleColorSelection={this.handleColorSelection}
+                  handleNewGameClick={this.handleNewGameClick}
+                  handlePegClick={this.handlePegClick}
+                  handleScoreClick={this.handleScoreClick}
+                  elapsedTime={this.state.elapsedTime}
+                  isTiming={!this.state.finalTime}
+                  handleTick={this.handleTick}
+                  interval={1000}
+                />}
+              />
+              <Route exact path= '/settings' render={() =>
+                <SettingsPage
+                  colorTable={colorTable}
+                  difficultyLevel={this.state.difficultyLevel}
+                  handleDifficultyChange={this.setDifficulty}
+                  handleNewGame={this.handleNewGameClick}
+                />}
+              />
+            </Switch>
+          </BrowserRouter>
         </div>
         <footer style={headFootStyle}>{(winTries ? `You Won in ${winTries} Guesses!` : 'Good Luck!')}</footer>
       </div>
