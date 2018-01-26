@@ -62,12 +62,6 @@ class App extends Component {
     return new Array(size).fill().map(dummy => Math.floor(Math.random() * size));
   }
 
-  getWinTries() {
-    // if winner, return num guesses, otherwise 0 (no winner)
-    let lastGuess = this.state.guesses.length - 1;
-    return this.state.code.join() === this.state.guesses[lastGuess].code.join() ? lastGuess + 1 : 0;
-  }
-
   /*---------- Callback Methods ----------*/
 
   handleColorSelection = (colorIdx) =>  {
@@ -161,7 +155,7 @@ class App extends Component {
 
   render() {
     console.log('render')
-    let winTries = this.getWinTries();
+    
     return (
       <div className="App">
         <header style={headFootStyle}>R E A C T &nbsp;&nbsp; M A S T E R M I N D</header>
@@ -194,7 +188,7 @@ class App extends Component {
             </Switch>
           </BrowserRouter>
         </div>
-        <footer style={headFootStyle}>{(winTries ? `You Won in ${winTries} Guesses!` : 'Good Luck!')}</footer>
+        
       </div>
     );
   }
