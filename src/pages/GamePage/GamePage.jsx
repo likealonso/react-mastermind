@@ -8,7 +8,15 @@ import './GamePage.css'
 
 const GamePage = (props) => {
     let lastGuess = props.guesses.length - 1;
-    let winTries = props.guesses[lastGuess].score.perfect === 4 ? lastGuess + 1 : 0
+    let winTries = props.guesses[lastGuess].score.perfect === 4 ? lastGuess + 1 : 0;
+    let headFootStyle = {
+        height: 50,
+        padding: 10,
+        margin: '15px 0',
+        color: 'grey',
+        fontSize: 18,
+        textAlign: 'center'
+      };
 
     return (
         <div className="GamePage">
@@ -36,7 +44,7 @@ const GamePage = (props) => {
                     <NewGameButton handleNewGameClick={props.handleNewGameClick} />
                 </div>
             </div>
-            <footer className='header-footer'>{(winTries ? `You Won in ${winTries} Guesses!` : 'Good Luck!')}</footer>
+            <footer style={headFootStyle}>{(winTries ? `You Won in ${winTries} Guesses!` : 'Good Luck!')}</footer>
         </div>
     )
 }
